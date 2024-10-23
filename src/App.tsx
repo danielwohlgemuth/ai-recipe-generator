@@ -28,12 +28,13 @@ function App() {
 
       const { data, errors } = await amplifyClient.queries.askBedrock({
         ingredients: [formData.get("ingredients")?.toString() || ""],
+        model: formData.get("models")?.toString() || "",
       });
 
       if (!errors) {
         setResult(data?.body || "No data returned");
       } else {
-        console.log(errors);
+        console.log("errors", errors);
       }
 
 
@@ -67,6 +68,13 @@ function App() {
             name="ingredients"
             placeholder="Ingredient1, Ingredient2, Ingredient3,...etc"
           />
+          <select name="models">
+            <option value="">--Please choose a model--</option>
+            <option value="amazon_titan_text_g1_express">Amazon Titan Text G1 Express</option>
+            <option value="llama_3_8b_instruct">Llama 3 8B Instruct</option>
+            <option value="cohere_command_r">Cohere Command R</option>
+            <option value="anthropic_claude_3_sonnet">Anthropic Claude 3 Sonnet</option>
+          </select>
           <button type="submit" className="search-button">
             Generate
           </button>
